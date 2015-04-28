@@ -116,9 +116,8 @@
     }
 
     function _parseResponse(response) {
-        if(!response) {
-            return false;
-        }
+
+        if(!response) return false;
 
         for(var i in widget.balanceInfo) {
             if(widget.balanceInfo.hasOwnProperty(i)) {
@@ -154,12 +153,16 @@
 
     function _showBalanceInfo() {
         chrome.browserAction.setTitle(_getTitle());
-		chrome.browserAction.setBadgeBackgroundColor(_getBadgeBackgroundColor());
+        chrome.browserAction.setBadgeBackgroundColor(_getBadgeBackgroundColor());
         chrome.browserAction.setBadgeText(_getBalanceForBadge());
     }
 
     function _getBalance() {
         return widget.balanceInfo.balance;
+    }
+
+    function _getDaysString() {
+        return widget.balanceInfo.days2BlockStr;
     }
 
     function _setBalance(value) {
@@ -195,10 +198,11 @@
     }
 	
 	function _getTitle() {
+        var balance = _getBalance();
 
 		return {
-			title: _getBalance() !== null
-                ? ('Ваш баланс: ' + parseFloat(widget.balanceInfo.balance).toFixed(2) + ' руб.\r\n' + widget.balanceInfo.days2BlockStr)
+			title: balance !== null
+                ? ('Ваш баланс: ' + parseFloat(balance).toFixed(2) + ' руб.\r\n' + _getDaysString())
                 : 'Электронный город.\r\nНажмите чтобы обновить баланс'
 		};
 	}
