@@ -1,28 +1,37 @@
 {
   "name": "Баланс абонента Электронного города",
+  "description": "Отображение текущего баланса абонента Электронного города",
+  "homepage_url": "http://2090000.ru",
+
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "Отображает баланс абонента Электронного города",
-  "homepage_url": "2090000.ru",
+
+  "minimum_chrome_version": "42",
+
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "128" : "img/icon128.png",
+    "48"  : "img/icon48.png",
+    "16"  : "img/icon16.png"
   },
-  "default_locale": "ru",
+
   "background": {
     "scripts": [
       "js/background.js"
     ],
     "persistent": true
   },
+
   "browser_action": {
-    "default_icon": "icons/icon19.png",
-    "default_title": "browser action demo",
-    "default_popup": "src/browser_action/browser_action.html"
+    "default_icon"  : "img/icon22.png",
+    "default_title" : "Запросить баланс",
+    "default_popup" : "popup.html"
   },
+
+  "options_page": "options.html",
+
   "permissions": [
-    "notifications",
+    "alarms",
+    "storage",
     "https://api.novotelecom.ru/billing/*"
   ]
 }

@@ -9,11 +9,15 @@
     'use strict';
 
     var popup = {
+
         controls: {
 	        fields: {
-		        lblBalance: {
-			        o: 'popup-balance'
-		        }
+		        lblBalance: {o: 'balance'},
+				lblFio: {o: 'fio'},
+				lblContract: {o: 'contract'},
+				lblDays2Block: {o: 'days2block'},
+				lblBalance2Block: {o: 'balance2block'},
+				lblErrorMessage: {o: 'error-message'}
 	        },
 	        buttons: {
 		        btnSettings: {
@@ -28,40 +32,84 @@
         },
 
         init: function() {
-	        initControls();
+			try {
 
-	        var balanceString = chrome.extension.getBackgroundPage().ntkBalance.getCurrentBalanceString().replace('\r\n','<br/>');
-	        this.controls.fields.lblBalance.o.innerHTML = balanceString;
+				_initControls();
+
+				var widget = this.getWidget();
+
+				var	balanceInfo = widget.getCurrentBalanceInfo();
+
+				if(balanceInfo.errorCode && parseInt(balanceInfo.errorCode) > 0) {
+					this.controls.fields.lblErrorMessage.o.innerHTML = widget.errorMessages[balanceInfo.errorCode];
+
+					return this;
+				}
+
+				this.controls.fields.lblBalance.o.innerHTML = parseFloat(balanceInfo.balance).toFixed(2).toString();
+				this.controls.fields.lblFio.o.innerHTML = balanceInfo.name;
+				this.controls.fields.lblContract.o.innerHTML = balanceInfo.contractId;
+				this.controls.fields.lblDays2Block.o.innerHTML = balanceInfo.days2BlockStr;
+				this.controls.fields.lblBalance2Block.o.innerHTML = balanceInfo.debetBound;
+
+				this.hideErrors();
+
+			} catch(e){}
+
             return this;
         },
+
+		hideErrors: function () {
+			this.setDisplay('div.error', 'none').setDisplay('div.success', 'block');
+		},
 	    
 	    openSettings: function () {
+
 		   return function() {
 			   chrome.runtime.openOptionsPage();
 		   }
 	    },
 	    
 	    refreshBalance: function () {
-		    var self = this;
-		    return function () {
-			    var ntkBalance = chrome.extension.getBackgroundPage().ntkBalance;
-			    if(ntkBalance) {
-				    ntkBalance.setLastUpdate(false).updateBalanceInfo();
-			    }
+			var widget = this.getWidget();
 
+		    return function() {
+				widget.setLastUpdate(false).updateBalanceInfo();
 			    window.close();
 		    }
-	    }
+	    },
+
+		getWidget: function () {
+			var bg = chrome.extension.getBackgroundPage();
+
+			return bg['ntkBalance'];
+		},
+
+		setDisplay: function (selector, display) {
+			var elements = document.querySelectorAll(selector);
+
+			for(var i in elements) {
+				if(elements.hasOwnProperty(i) && elements[i].style) {
+					elements[i].style.display = display;
+				}
+			}
+
+			return this;
+		}
     };
 
-
-	function initControls() {
+	// @todo DRY!
+	function _initControls() {
 		for(var i in popup.controls) {
 			if(popup.controls.hasOwnProperty(i)) {
 				for(var j in popup.controls[i]) {
 					if(popup.controls[i].hasOwnProperty(j)) {
 						popup.controls[i][j].o = document.getElementById(popup.controls[i][j].o);
-						if(popup.controls[i][j].e && popup.hasOwnProperty(popup.controls[i][j].e) && popup[popup.controls[i][j].e] instanceof Function) {
+						if(popup.controls[i][j].o
+							&& popup.controls[i][j].e
+							&& popup.hasOwnProperty(popup.controls[i][j].e)
+							&& popup[popup.controls[i][j].e] instanceof Function)
+						{
 							popup.controls[i][j].o.addEventListener('click', popup[popup.controls[i][j].e].call(popup));
 						}
 					}
@@ -70,7 +118,5 @@
 		}
 	}
 
-
 	return popup;
-
 })());

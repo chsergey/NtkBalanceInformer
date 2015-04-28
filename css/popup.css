@@ -1,0 +1,116 @@
+html, body {
+    padding: 0;
+    margin: 0;
+
+    font: 14px Arial;
+    color: #333;
+}
+
+a, a:visited {
+    color: #000;
+}
+
+hr {
+    border: none;
+}
+
+#main-wrapper {
+    width: 220px;
+    position: relative;
+}
+
+#error-message {
+    padding: 15px 10px 0;
+    text-align: center;
+
+    max-width: 180px;
+}
+
+.success {
+    display: none;
+}
+
+.error {
+    display: block;
+}
+
+#header {
+    min-height: 80px;
+    padding: 10px;
+    background: #fcfcfc;
+    background: -webkit-linear-gradient(top, #fcfcfc 0%, #f2f2f2 47%, #ebebeb 100%);
+    background: linear-gradient(to bottom, #fcfcfc 0%, #f2f2f2 47%, #ebebeb 100%);
+}
+
+#fio {
+    font-size: 18px;
+    max-width: 180px;
+}
+
+#contract-wrapper {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+#balance-wrapper {
+    color: #fff;
+    background-color: #ea782a;
+}
+
+#balance {
+    font-size: 32px;
+    line-height: 60px;
+}
+.balance-suffix {
+    font-size: 20px;
+}
+
+#days2block {
+    font-size: 14px;
+}
+
+#balance2block {
+    font-size: 14px;
+}
+
+#actions {
+    font-size: 14px;
+}
+
+#actions a[href="#"] {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px dashed #fff;
+}
+
+#popup-refresh {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+
+    background: url("../img/refresh.png") no-repeat 0 0;
+    cursor: pointer;
+
+    width: 24px;
+    height: 24px;
+}
+
+#popup-refresh:hover {
+    transition-duration: 300ms;
+    transform: rotate(360deg);
+}
+
+.space10 {
+    height: 10px;
+}
+
+.hr {
+    margin: 16px -16px;
+    border-bottom: 1px dashed white;
+    background-color: transparent;
+}
+
+.center {
+    width: 100%;
+    text-align: center;
+}

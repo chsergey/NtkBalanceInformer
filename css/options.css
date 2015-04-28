@@ -1,0 +1,60 @@
+#wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#options {
+    width: 320px;
+    margin: 0 auto;
+
+    border: 1px solid #999;
+    border-radius: 10px;
+}
+
+#header {
+    font-size: 26px;
+    line-height: 36px;
+
+    text-align: center;
+    color: #ea782a;
+
+    font-family: Arial, normal, sans-serif;
+    font-weight: bold;
+
+    width: 100%;
+}
+
+.option-block {
+    padding: 10px;
+}
+.option-block:after {
+    clear: both;
+}
+
+.option-block label {
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.option-block input {
+    width: 180px;
+    float: right;
+    padding: 5px;
+}
+
+#buttons {
+    text-align: center;
+}
+
+#buttons button {
+    margin-left: 10px;
+    width: 100px;
+    padding: 5px;
+}
+
+#legend {
+    padding: 10px;
+    color: #555;
+}
+

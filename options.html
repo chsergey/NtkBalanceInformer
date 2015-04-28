@@ -1,10 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="ru">
     <meta charset="UTF-8">
-    <title>Настройки виджета</title>
+    <title>Электронный город / Настройки виджета</title>
+    <link type="text/css" rel="stylesheet" href="css/options.css" media="all">
+    <script src="js/options.js"></script>
+    <script src="js/md5.min.js"></script>
 </head>
 <body>
-<script src="js/options.js"></script>
+<div id="wrapper">
+    <div id="options">
+        <div id="header">Электронный город</div>
+        <div class="option-block">
+            <label>Договор N*: <input type="text" id="options-login"/></label>
+        </div>
+        <div class="option-block">
+            <label>Пароль*: <input type="password" id="options-password"/></label>
+        </div>
+        <div class="option-block">
+            <div id="buttons">
+                <button id="options-btn-save">Сохранить</button>
+                <button id="options-btn-close">Закрыть</button>
+            </div>
+        </div>
+
+        <div class="options-block">
+            <div id="legend">
+                <div>* Номер договора и пароль обязательны</div>
+                <div title="Пароль шифруется сразу после сохранения">* Пароль не хранится в открытом виде</div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
