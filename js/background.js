@@ -198,7 +198,7 @@
 
 		return {
 			title: _getBalance() !== null
-                ? ('Ваш баланс: ' + widget.balanceInfo.balance + ' руб.\r\n' + widget.balanceInfo.days2BlockStr)
+                ? ('Ваш баланс: ' + parseFloat(widget.balanceInfo.balance).toFixed(2) + ' руб.\r\n' + widget.balanceInfo.days2BlockStr)
                 : 'Электронный город.\r\nНажмите чтобы обновить баланс'
 		};
 	}
