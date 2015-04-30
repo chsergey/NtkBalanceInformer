@@ -66,7 +66,7 @@
 	    openSettings: function () {
 
 		   return function() {
-			   chrome.tabs.create({ url: 'options.html'});
+			   chrome.tabs.create({url: 'options.html'});
 		   }
 	    },
 	    
