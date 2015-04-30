@@ -66,7 +66,7 @@
 	    openSettings: function () {
 
 		   return function() {
-			   chrome.runtime.openOptionsPage();
+			   chrome.tabs.create({ url: 'options.html'});
 		   }
 	    },
 	    

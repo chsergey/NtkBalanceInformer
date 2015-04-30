@@ -82,6 +82,7 @@
 
 	    setLastUpdate: function (date) {
 		    this.lastUpdate = date;
+
 		    return this;
 	    },
 
@@ -89,6 +90,8 @@
             _setBalance(null);
             _showBalanceInfo();
             this.balanceInfo.errorCode = code || 100500;
+
+            return this;
         }
     };
 
@@ -108,7 +111,7 @@
                         _showBalanceInfo();
                     }
                 } else {
-                    widget.setError(xhr.status + 1000);
+                    widget.setLastUpdate(false).setError(xhr.status + 1000);
                 }
             }
         };
