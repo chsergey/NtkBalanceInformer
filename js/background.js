@@ -61,18 +61,6 @@
             return this;
         },
 
-        isUpdatedToday: function () {
-            var result = true;
-
-            if(!this.lastUpdate || (this.lastUpdate && (_isYesterday(this.lastUpdate)))) {
-                result = false;
-            }
-
-            this.lastUpdate = new Date;
-
-            return result;
-        },
-
         getVersion: function() {
             return _getManifest().version;
         },
@@ -97,10 +85,6 @@
     };
 
     function _processingUpdate (credentials) {
-        if(widget.isUpdatedToday()) {
-            return true;
-        }
-
         _showBalanceInfo();
 
         var xhr = new XMLHttpRequest();
@@ -227,19 +211,6 @@
         return element ? element.textContent.trim() : '';
     }
 
-    function _isYesterday(date) {
-        var yesterday = (function(d){ d.setDate(d.getDate() - 1); return d;})(new Date),
-            comp_funcs = ['getDate', 'getMonth', 'getFullYear'],
-            result = true;
-
-        for(var i in comp_funcs) {
-            if(comp_funcs.hasOwnProperty(i)) {
-                result = result && (yesterday[comp_funcs[i]]() == date[comp_funcs[i]]());
-            }
-        }
-
-        return result;
-    }
-
     return widget;
+
 })());
