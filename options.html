@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head lang="ru">
-    <meta charset="UTF-8">
-    <title>Электронный город / Настройки виджета</title>
-    <link type="text/css" rel="stylesheet" href="css/options.css" media="all">
-    <script src="js/options.js"></script>
-    <script src="js/md5.min.js"></script>
-</head>
+    <head lang="ru">
+        <meta charset="UTF-8">
+        <title>Электронный город / Настройки виджета</title>
+        <link type="text/css" rel="stylesheet" href="css/options.css" media="all">
+        <script src="js/options.js"></script>
+        <script src="js/md5.min.js"></script>
+    </head>
 <body>
-<div id="wrapper">
-    <div id="options">
-        <div id="header">Электронный город</div>
-        <div class="option-block">
-            <label>Договор N*: <input type="text" id="options-login"/></label>
-        </div>
-        <div class="option-block">
-            <label>Пароль*: <input type="password" id="options-password"/></label>
-        </div>
-        <div class="option-block">
-            <div id="buttons">
-                <button id="options-btn-save">Сохранить</button>
-                <button id="options-btn-close">Закрыть</button>
-            </div>
-        </div>
+    <div id="wrapper">
+        <div id="options-wrapper">
+            <a href="http://2090000.ru" target="_blank">
+                <img src="img/matrioshka.png" width="194" height="213" alt="Электронный город" title="Электронный город">
+            </a>
+            <div id="options">
+                <h1>Настройки виджета</h1>
 
-        <div class="options-block">
-            <div id="legend">
-                <div>* Номер договора и пароль обязательны</div>
-                <div title="Пароль шифруется сразу после сохранения">* Пароль не хранится в открытом виде</div>
+                <div class="mt10">
+                    <div>Номер договора</div>
+                    <div>
+                        <input type="text" id="options-login"/>
+                    </div>
+                </div>
+
+                <div class="mt10">
+                    <div>Пароль <span class="muted small">(<a target="_blank" href="https://billing.novotelecom.ru/billing/user/password/">забыли?</a>)</span></div>
+                    <div>
+                        <input type="password" id="options-password" title="Пароль не хранится в открытом виде"/>
+                    </div>
+                </div>
+
+                <div class="mt10">
+                    <button id="options-btn-save">Сохранить</button>
+                    <button id="options-btn-close">Закрыть</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
