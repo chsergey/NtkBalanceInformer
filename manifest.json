@@ -8,8 +8,6 @@
   "description": "Отображение текущего баланса абонента Электронного города",
   "homepage_url": "http://2090000.ru",
 
-  "default_locale": "ru",
-
   "minimum_chrome_version": "41",
 
   "author": "chsergey@chsergey.ru",
