@@ -1,10 +1,14 @@
 {
+  "manifest_version": 2,
+
   "name": "Баланс абонента Электронного города",
+  "short_name": "Баланс ЭГ",
+  "version": "0.0.1",
+
   "description": "Отображение текущего баланса абонента Электронного города",
   "homepage_url": "http://2090000.ru",
 
-  "version": "0.0.1",
-  "manifest_version": 2,
+  "default_locale": "ru",
 
   "minimum_chrome_version": "41",
 
