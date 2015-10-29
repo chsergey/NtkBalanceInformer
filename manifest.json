@@ -8,6 +8,8 @@
 
   "minimum_chrome_version": "41",
 
+  "author": "chsergey@chsergey.ru",
+
   "icons": {
     "128" : "img/icon128.png",
     "48"  : "img/icon48.png",
