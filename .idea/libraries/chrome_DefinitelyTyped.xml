@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="chrome-DefinitelyTyped" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$USER_HOME$/.WebIde80/system/extLibs/http_github.com_borisyankov_DefinitelyTyped_raw_master_chrome_chrome-app.d.ts" />
+        <item url="file://$USER_HOME$/.WebIde80/system/extLibs/http_github.com_borisyankov_DefinitelyTyped_raw_master_chrome_chrome.d.ts" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.WebIde80/system/extLibs/http_github.com_borisyankov_DefinitelyTyped_raw_master_chrome_chrome-app.d.ts" />
+      <root url="file://$USER_HOME$/.WebIde80/system/extLibs/http_github.com_borisyankov_DefinitelyTyped_raw_master_chrome_chrome.d.ts" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
