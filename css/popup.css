@@ -2,115 +2,118 @@ html, body {
     padding: 0;
     margin: 0;
 
-    font: 14px Arial;
+    font: 12px Arial;
     color: #333;
 }
 
-a, a:visited {
-    color: #000;
+a:visited {
+    color: inherit;
 }
 
-hr {
-    border: none;
-}
+div#wrapper {
+    padding: 10px;
+} 
 
-#main-wrapper {
-    width: 220px;
-    position: relative;
-}
-
-#error-message {
-    padding: 15px 10px 0;
-    text-align: center;
-
-    max-width: 180px;
-}
-
-.success {
+div#contractTemplate {
     display: none;
 }
 
-.error {
-    display: block;
+div#switcher {
+    line-height: 24px;
+    margin-top: 14px;
 }
 
-#header {
-    min-height: 80px;
+div#contracts {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+div#contracts .contract-wrapper {
+    display: inline-block;
+    width: 200px;
+
+    border-radius: 3px;
+    border: 1px solid #eee;
+    box-shadow: 1px 1px 3px #bbb;
+
     padding: 10px;
-    background: #fcfcfc;
-    background: -webkit-linear-gradient(top, #fcfcfc 0%, #f2f2f2 47%, #ebebeb 100%);
-    background: linear-gradient(to bottom, #fcfcfc 0%, #f2f2f2 47%, #ebebeb 100%);
+    margin-right: 10px;
 }
 
-#fio {
-    font-size: 18px;
-    max-width: 180px;
+div#contracts .contract-wrapper:last-child {
+    margin-right: 0;
 }
 
-#contract-wrapper {
-    margin-top: 10px;
-    font-size: 12px;
+div#contracts .contract-wrapper div {}
+
+div#contracts div.contract-name {
+    font-size: 13px;
 }
 
-#balance-wrapper {
-    color: #fff;
-    background-color: #f47920;
+div#contracts div.contract-number {
+    color: #999;
 }
 
-#balance {
-    font-size: 32px;
-    line-height: 60px;
-}
-.balance-suffix {
-    font-size: 20px;
-}
-
-#days2block {
-    font-size: 14px;
-}
-
-#balance2block {
-    font-size: 14px;
-}
-
-#actions {
-    font-size: 14px;
-}
-
-#actions a[href="#"] {
-    color: #fff;
-    text-decoration: none;
-    border-bottom: 1px dashed #fff;
-}
-
-#popup-refresh {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-
-    background: url("../img/refresh.png") no-repeat 0 0;
-    cursor: pointer;
-
-    width: 24px;
-    height: 24px;
-}
-
-#popup-refresh:hover {
-    transition-duration: 300ms;
-    transform: rotate(360deg);
-}
-
-.space10 {
-    height: 10px;
-}
-
-.hr {
-    margin: 16px -16px;
-    border-bottom: 1px dashed white;
-    background-color: transparent;
-}
-
-.center {
-    width: 100%;
+div#contracts div.contract-balance-wrapper {
+    border-radius: 3px;
+    box-shadow: inset #B9B9B9 0 0 100px;
+    padding: 10px;
     text-align: center;
 }
+
+div#contracts div.contract-balance {
+    font-size: 24px;
+}
+
+div#contracts div.contract-balance.positive {
+    color: darkgreen;
+}
+div#contracts div.contract-balance.negative {
+    color: darkred;
+}
+
+
+
+div#contracts div.contract-balance:after {
+    content: ' ₽';
+    font-weight: 200;
+}
+
+div#contracts div.contract-balance-note {}
+
+div#contracts div.contract-refresh {
+    text-align: center;
+    cursor: pointer;
+}
+
+div#contracts div.contract-refresh span {    
+    border-bottom: 1px dashed;
+}
+
+div#contracts div.contract-promised-payment-wrapper {
+    display: none;
+}
+
+div#contracts div.contract-updated {
+    padding-top: 5px;
+    border-top: 1px dashed #cccccc;
+    font-size: 10px;
+    color: #999;    
+}
+
+div#contracts div.contract-error-wrapper {
+    display: none;
+}
+
+.mb7 {
+    margin: 0 0 7px 0;
+}
+.warning {
+    color: red;
+}
+
+.visible-true { display: block !important; }
+.visible-false { display: none !important; }

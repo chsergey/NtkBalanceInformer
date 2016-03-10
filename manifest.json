@@ -5,12 +5,12 @@
   "short_name": "Баланс ЭГ",
   "version": "0.0.1",
 
-  "description": "Отображение текущего баланса абонента Электронного города",
-  "homepage_url": "http://2090000.ru",
+  "description": "Отображение баланса абонента Электронного города",
+  "homepage_url": "http://2090000.ru/",
 
-  "minimum_chrome_version": "41",
+  "minimum_chrome_version": "45",
 
-  "author": "chsergey@chsergey.ru",
+  "author": "Chunizhekov Sergey <chsergey@chsergey.ru>",
 
   "icons": {
     "128" : "img/icon128.png",
@@ -27,7 +27,7 @@
 
   "browser_action": {
     "default_icon"  : "img/icon22.png",
-    "default_title" : "Запросить баланс",
+    "default_title" : "Электронный город",
     "default_popup" : "popup.html"
   },
 
