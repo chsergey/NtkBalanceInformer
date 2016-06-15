@@ -39,8 +39,7 @@
         init: function(api, cron, mdl, opts) {
 
             this.api  = api.create({
-                //url: 'https://api.novotelecom.ru/user/v1/',
-                url: ' http://london-app:8490/user/v1/',
+                url: 'https://api.novotelecom.ru/user/v1/',
                 responseType: 'json',
                 clientId: 'chromeExtension_' + this.manifest.version
             });
