@@ -56,6 +56,12 @@
 
             this.startCron();
 
+            chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+                if(request.action && this[request.action] && this[request.action] instanceof Function) {
+                    this[request.action](request.data);
+                }
+            });
+
             return this;
         },
 
@@ -137,9 +143,7 @@
                             });
                     });
                 })
-                .catch(() => {
-                    debugger;
-                });
+                .catch(() => {});
         },
 
         /**
@@ -170,16 +174,20 @@
                             self.mdl
                                 .setContractData(contract, 'updated', new Date)
                                 .delContractData(contract, 'error');
-
+                            if(self.mdl.getContractDataEx(contract, 'params.def')) {
+                                self.setDefault({contract: contract});
+                            }
                             return calls;
                         });
                 })
                 .catch((error) => {
                     //invalid token
                     if(error.code == 2) {
-                        console.log('invalid token error')
+                        console.log('invalid token error');
+                        self.mdl.setContractData(contract, 'token', null);
                     }
                     self.mdl.setContractData(contract, 'error', error);
+
                     return error;
                 });
         },
@@ -222,6 +230,18 @@
         setError: function(error) {
             _log('Widget error', error);
             self.error = error;
+        },
+
+        setDefault: (data) => {
+            let balance = self.mdl.getContractDataEx(data.contract, 'dynamic.balance').toFixed(0),
+                color = balance > 0 ? [0, 255, 0, 150] : [255, 0, 0, 150];
+
+            chrome.browserAction.setBadgeBackgroundColor({
+                color: color
+            });
+            chrome.browserAction.setBadgeText({
+                text: balance.toString()
+            });
         }
     };
 
@@ -579,7 +599,11 @@
                     return null;
                 }
 
-                return key.split('.').reduce((upper, lower) => upper[lower], data);
+                try {
+                    return key.split('.').reduce((upper, lower) => upper[lower], data);
+                } catch(e) {
+                    return null;
+                }
             },
 
             /**
@@ -593,7 +617,7 @@
                     if (contracts.length) {
                         resolve(contracts);
                     } else {
-                        reject(_getError.call(self, 'emptyContracts'));
+                        reject(_getError.call(self, 'emptySettings'));
                     }
                 });
             },

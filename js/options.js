@@ -114,6 +114,9 @@ class NtkBalanceOptions {
             pwd: data.password,
             def: data.def
         };
+        if(data.def) {
+            this.setDefault({contract: data.contract});
+        }
         this.core.opts.write(this.settings);
         this.core.updateAll();
     }
@@ -232,6 +235,18 @@ class NtkBalanceOptions {
                 this.addNewContractRow('', {});
             }
         }
+    }
+
+    /**
+     * Set default contract for badge
+     * @param data
+     */
+    setDefault(data) {
+        Object.keys(this.settings.contracts).map((contract) => {
+            this.settings.contracts[contract].def = data.contract == contract;
+        });
+        this.core.opts.write(this.settings);
+        chrome.runtime.sendMessage({action: "setDefault", data: data}, () => {});
     }
 }
 
@@ -390,6 +405,9 @@ class ContractRow {
     onSetDefault() {
         return () => {
             this.settings.def = true;
+            if(this.contract) {
+                this.core.setDefault({contract: this.contract});
+            }
         }
     }
 }
