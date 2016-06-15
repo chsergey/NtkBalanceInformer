@@ -76,7 +76,7 @@ div#contractTemplate {
     font-size: 24px;
 }
 .contract-balance:after {
-    content: ' р.';
+    content: ' p.';
     font-weight: 200;
 }
 .contract-blocks-wrapper {
