@@ -205,7 +205,7 @@
 		 */
 		this.formatters = {
 			'dynamic.balance': (v) => {
-				return  v ? v.toFixed(2).toLocaleString() : null;
+				return  v ? v.toFixed(2): null;
 			},
 			'updated': (v) => {
 				return v.toLocaleString().replace(', ', ', в ');
