@@ -1,41 +1,72 @@
 <!DOCTYPE html>
 <html>
-    <head lang="ru">
-        <meta charset="UTF-8">
-        <title>Электронный город / Настройки виджета</title>
-        <link type="text/css" rel="stylesheet" href="css/options.css" media="all">
-        <script src="js/options.js"></script>
-        <script src="js/md5.min.js"></script>
-    </head>
+<head lang="ru">
+    <meta charset="UTF-8">
+    <title>Электронный город / Настройки виджета</title>
+    <link type="text/css" rel="stylesheet" href="css/options.css" media="all" />
+</head>
 <body>
-    <div id="wrapper">
-        <div id="options-wrapper">
-            <a href="http://2090000.ru" target="_blank">
-                <img src="img/matrioshka.png" width="194" height="213" alt="Электронный город" title="Электронный город">
-            </a>
-            <div id="options">
-                <h1>Настройки виджета</h1>
+<div id="navigation">
+    <div id="head">Настройки</div>
+    <ul id="menu">
+        <li class="menu-item active" data-target="contracts">Договоры</li>
+        <li class="menu-item" data-target="options">Параметры</li>
+        <li class="menu-item" data-target="about">О виджете</li>
+    </ul>
+    <div id="logo">
+        <a href="http://2090000.ru/" target="_blank"><img src="img/flat-logo.png" alt="Новотелеком"></a>
+    </div>
+</div>
+<div id="wrapper">
+    <div id="contracts" class="settings-wrapper active">
+        <div class="header">Договоры</div>
+        <div class="note">
+            <p>Здесь вы можете добавить или удалить договоры, по которым будет отображаться баланс.</p>
+        </div>
 
-                <div class="mt10">
-                    <div>Номер договора</div>
-                    <div>
-                        <input type="text" id="options-login"/>
-                    </div>
-                </div>
+        <div><p id="contracts-list-msg"></p></div>
+        <div id="contracts-list"></div>
 
-                <div class="mt10">
-                    <div>Пароль <span class="muted small">(<a target="_blank" href="https://billing.novotelecom.ru/billing/user/password/">забыли?</a>)</span></div>
-                    <div>
-                        <input type="password" id="options-password" title="Пароль не хранится в открытом виде"/>
-                    </div>
-                </div>
+        <button id="btnAddContract" class="orange"><span>&#10010;</span> Добавить договор</button>
 
-                <div class="mt10">
-                    <button id="options-btn-save">Сохранить</button>
-                    <button id="options-btn-close">Закрыть</button>
-                </div>
+        <div id="contract-row-template" class="contract-row">
+            <div class="contract-default">
+                <input class="chkDefault" type="radio" name="default" title="Основной договор">
+            </div>
+            <div class="contract-number">
+                <span class="lblContract" title="Номер договора">0000</span>
+                <input data-type="contract" class="input" type="text" value="" maxlength="8" placeholder="Договор" >
+            </div>
+            <div class="contract-password" title="Пароль">
+                <span title="Пароль хранится зашифрованным">**********</span>
+                <input data-type="password" class="input" type="text" maxlength="255" placeholder="Пароль">
+            </div>
+            <div class="contract-actions">
+                <button class="tool remove btnRemove" title="Удалить договор"></button>
+                <button class="tool cancel btnCancel" title="Отмена"></button>
+                <button class="tool edit btnEdit" title="Изменить пароль"></button>
+                <button class="tool accept btnAccept" title="Сохранить договор"></button>
             </div>
         </div>
     </div>
+
+    <div id="options" class="settings-wrapper">
+        <div class="header">Параметры</div>
+        <div class="note">Здесь вы можете настроить параметры виджета</div>
+        <p>В настоящий момент доступные опции отсутствуют</p>
+    </div>
+
+    <div id="about" class="settings-wrapper">
+        <div class="header">О виджете</div>
+        <div class="note">
+            <p>Разработано в Электронном городе.</p>
+            <p><i class="email"></i><a href="mailto:info@2090000.ru">info@2090000.ru</a></p>
+            <p><i class="url"></i><a href="http://2090000.ru" target="_blank">http://2090000.ru</a></p>
+            <p>&copy; ООО "Новотелеком", 2004 — {year}</p>
+        </div>
+    </div>
+</div>
+<script src="js/options.js"></script>
+<script src="js/sha1.js"></script>
 </body>
 </html>

@@ -29,29 +29,30 @@
             },
             error: null,
             errors: {
-                emptyContracts: 'Добавьте договор в настройках',
+                emptySettings: 'Нет договоров',
                 cronError: 'Не удалось запустить обновление по расписанию'
             },
 
             init: function(api, cron, mdl, opts) {
 
                 this.api  = api.create({
-                    url: 'https://api.novotelecom.ru/user/v1/',
+                    //url: 'https://api.novotelecom.ru/user/v1/',
+                    url: ' http://london-app:8490/user/v1/',
                     responseType: 'json',
-                    appId: 'chromeExtension_' + this.manifest.version
+                    clientId: 'chromeExtension_' + this.manifest.version
                 });
 
                 this.cron = cron.create({
                     name: 'ntkBalanceAlarm',
                     params: {
-                        periodInMinutes: 1
+                        periodInMinutes: 90
                     }
                 });
 
                 this.mdl = mdl.create();
                 this.opts = opts.create();
 
-                this.startCron();
+                //this.startCron();
 
                 return this;
             },
@@ -134,7 +135,9 @@
                                 });
                         });
                     })
-                    .catch(self.setError);
+                    .catch(() => {
+                        debugger;
+                    });
             },
 
             /**
@@ -151,8 +154,8 @@
                         if(data.token) {
                             return data.token;
                         }
-                        if(data.credentials) {
-                            return self.api.login({userName: contract, password: data.credentials.pwd});
+                        if(data.params) {
+                            return self.api.login({userName: contract, password: data.params.pwd});
                         }
 
                         throw _getError.call(self.mdl, 'contractCredentialsEmpty');
@@ -172,7 +175,7 @@
                     .catch((error) => {
                         //invalid token
                         if(error.code == 2) {
-                            console.log('invalid token error!!!!')
+                            console.log('invalid token error')
                         }
                         self.mdl.setContractData(contract, 'error', error);
                         return error;
@@ -203,14 +206,14 @@
 
                 return self.opts
                     .read()
-                    .then((contracts) => {
+                    .then((options) => {
 
-                        Object.keys(contracts).map((contract) => {
-                            self.mdl.setContractData(contract, 'credentials', contracts[contract]);
+                        Object.keys(options.contracts).map((contract) => {
+                            self.mdl.setContractData(contract, 'params', options.contracts[contract]);
                             self.mdl.setContractData(contract, 'contractId', contract);
                         });
 
-                        return contracts;
+                        return options.contracts;
                     });
             },
 
@@ -393,7 +396,7 @@
                  * @returns {Promise}
                  */
                 login: function login(params) {
-                    params.appId = this.getOpt('appId');
+                    params.clientId = this.getOpt('clientId');
 
                     return this.sendRequest(this.createUrl('login', params))
                         .then((response) => {
@@ -591,6 +594,12 @@
                             reject(_getError.call(self, 'emptyContracts'));
                         }
                     });
+                },
+
+                deleteContract: function (contract) {
+                    if(this.data[contract]) {
+                        delete this.data[contract];
+                    }
                 }
             }),
 
@@ -624,7 +633,7 @@
                                 if(Object.keys(items).length) {
                                     resolve(items);
                                 } else {
-                                    reject(_getError.call(self, 'emptyContracts'));
+                                    reject(_getError.call(self, 'emptySettings'));
                                 }
                             }
                         });
@@ -652,109 +661,3 @@
         );
 
     }());
-
-    t = {
-        cred: {userName: 239864, password: 'kMZd833LfD7m6me/vtOjNGop1QI='},
-        c: function() {
-            return w.api.callMethod('login', this.cred)
-                .then(function(result) {console.log('chain call LOGIN', result.getResponse());return w.api.callMethod('getStaticInfo');})
-                .then(function(result) {console.log('chain call STATIC', result.getResponse());return w.api.callMethod('getDynamicInfo')})
-                .then(function(result) {console.log('chain call DYNAMIC', result.getResponse());return result;});
-        },
-
-        l: function() {
-            return w.api.callMethod('login', this.cred).then(this.then, this.ca);
-        },
-
-        s: function() {
-            return w.api.callMethod('getStaticInfo').then(this.then, this.ca);
-        },
-
-        r: function(k) {
-            return w.opts.read(k).then(this.then, this.ca);
-        },
-
-        w: function(ww) {
-            return w.opts.write(ww || {
-                239864: 'kMZd833LfD7m6me/vtOjNGop1QI=',
-                666666666: btoa('huhui'),
-                777777777: btoa('testsetsetset')
-            }).then(this.then, this.ca);
-        },
-
-        w1: function(ww) {
-            return w.opts.write(ww||{
-                '239864': {
-                    pwd: 'kMZd833LfD7m6me/vtOjNGop1QI='
-                }
-            }).then(this.then, this.ca);
-        },
-
-        cl: function () {
-            return w.opts.clearAll().then(this.then, this.ca);
-        },
-
-        aladd: function (name) {
-            return w.cron
-                .add(name || 'customAlarm', {periodInMinutes: 0.1})
-                .then((name) => {
-                    w.cron.addListener((alarm) => {
-                        if(name == alarm.name) {
-                            console.log(alarm.name + ' raised', alarm, this);
-                        }
-                    });
-
-                    return name;
-                })
-                .then(t.then)
-                .catch(t.ca);
-        },
-
-        alff: function () {
-            return new Promise.resolve({
-                then:() => {
-                    return 'huen';
-                }
-            });
-        },
-
-        then: function(result) {
-            console.log('success test', result);
-            return result;
-        },
-
-        ca: function(result) {
-            console.log('failed test', result);
-            throw result;
-        },
-
-        a: {
-            'static': {
-                client: {
-                    name: 'FIO FIO FIO'
-                }
-            },
-            dynamic: {
-                balance: -100,
-                block: {
-                    mess: 'BLOCK MESS'
-                }
-            },
-            a: {
-                b: {
-                    c:'cc',
-                    d:'ddd'
-                }
-            }
-        },
-        tt: (name) => {
-
-            var result = {};
-
-            name.split('.').map((k) => {
-                result = t.a[k] || result[k] || null;
-            });
-
-            return result;
-        }
-    };

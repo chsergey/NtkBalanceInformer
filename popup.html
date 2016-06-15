@@ -6,39 +6,41 @@
     <link type="text/css" rel="stylesheet" href="css/popup.css" media="all">
 </head>
 <body>
-<div id="wrapper">
-    <div id="contracts"></div>
-    <div id="switcher">
+<div id="wrapper" class="content-wrapper">
+    <div id="contracts" class="box-contracts"></div>
+    <div class="switcher">
         <div id="popup-open-settings">Настройки</div>
     </div>
 
     <div id="contractTemplate" class="contract-wrapper">
-        <div class="contract-name mb7">{static.client.name}</div>
-        <div class="contract-number mb7">Договор № <a target="_blank" href="https://billing.novotelecom.ru/billing/user/login/">{contractId}</a></div>
-        <div class="contract-balance-wrapper mb7">
-            <div class="contract-balance positive mb7">{dynamic.balance}</div>
-            <div class="contract-balance-note">{dynamic.balanceInfo}</div>
-        </div>
-        <div class="contract-promised-payment-wrapper visible-{dynamic.promisedPayment.connected}">
-            <div>Включена отсрочка платежа</div>
-            <div class="mb7">Порог: -{dynamic.promisedPayment.amount} руб.</div>
-            <!--
-            <div>{dynamic.promisedPayment.message}</div>
-            <div>{dynamic.promisedPayment.allowed}</div>
-            -->
-        </div>
+        <div class="main-flex">
+            <div class="contract-name mb7">{static.client.name}</div>
+            <div class="contract-number mb7">Договор № <a target="_blank" href="https://billing.novotelecom.ru/billing/user/login/">{contractId}</a></div>
+            <div class="contract-balance-wrapper mb7">
+                <div class="contract-balance mb7">{dynamic.balance} <span class="rub">&#8381;</span></div>
+                <div class="contract-balance-note">{dynamic.balanceInfo}</div>
+            </div>
 
-        <div class="contract-blocks-wrapper visible-{dynamic.simpleBlock.active}">
-            <div class="warning">Включена блокировка</div>
-            <div>{dynamic.simpleBlock.message}</div>
-        </div>
+            <div class="contract-promised-payment-wrapper visible-{dynamic.promisedPayment.connected}">
+                <div>Включена отсрочка платежа</div>
+                <div class="mb7">Порог: -{dynamic.promisedPayment.amount} руб.</div>
+                <!--
+                <div>{dynamic.promisedPayment.message}</div>
+                <div>{dynamic.promisedPayment.allowed}</div>
+                -->
+            </div>
 
+            <div class="contract-blocks-wrapper visible-{dynamic.simpleBlock.active}">
+                <div class="warning center">Включена блокировка</div>
+                <!-- <div>{dynamic.simpleBlock.message}</div> -->
+            </div>
+        </div>
         <div class="contract-updated mb7">Обновлено: {updated}</div>
         <div class="contract-refresh">
             <span>обновить</span>
         </div>
         <div class="contract-error-wrapper visible-error.show">
-            <div>Ошибка error.msg</div>
+            <span class="warning">Ошибка {error.msg}</span>
         </div>
     </div>
 </div>
