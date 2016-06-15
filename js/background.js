@@ -426,7 +426,7 @@
                         return response.token;
                     }).catch((error) => {
                         _log(error);
-                        if(DEBUG) throw error;
+                        throw error;
                     });
             },
 
