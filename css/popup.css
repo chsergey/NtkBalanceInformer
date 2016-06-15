@@ -75,10 +75,10 @@ div#contractTemplate {
 .contract-balance {
     font-size: 24px;
 }
-/*.contract-balance:after {
+.contract-balance:after {
     content: ' \20BD';
     font-weight: 200;
-}*/
+}
 .contract-blocks-wrapper {
     padding: 5px 0 10px 0;
 }
