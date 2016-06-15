@@ -6,7 +6,7 @@
 
     'use strict';
 
-    var DEBUG = true;
+    var DEBUG = false;
     /**
      * @todo rewrite in ES6
      */

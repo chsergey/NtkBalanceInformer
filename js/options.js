@@ -41,7 +41,6 @@ class NtkBalanceOptions {
         this.core.opts
             .read()
             .then(settings => {
-                console.log(settings);
                 this.settings = settings;
                 return settings.contracts;
             })
@@ -176,8 +175,6 @@ class NtkBalanceOptions {
         row.addTo(this.controls.contractsList);
 
         this.showContractsTable();
-
-        console.log(row);
     }
 
     getRowsCount() {
