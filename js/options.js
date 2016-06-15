@@ -30,7 +30,7 @@ class NtkBalanceOptions {
         this.updateLocation();
 
         this.settings = {};
-        this.core = chrome.extension.getBackgroundPage()['w'];
+        this.core = chrome.extension.getBackgroundPage()['ntkBalance'];
         this.readSettings();
     }
 
@@ -56,7 +56,7 @@ class NtkBalanceOptions {
 
     /**
      * Render settings after read
-     * @param settings
+     * @param contracts
      */
     renderContracts(contracts) {
         Object.keys(contracts).map(contract => {
@@ -64,6 +64,11 @@ class NtkBalanceOptions {
         });
     }
 
+    /**
+     * Add contract
+     * @param data
+     * @returns {Promise}
+     */
     addContract(data) {
 
         return new Promise((resolve, reject) => {
@@ -75,6 +80,7 @@ class NtkBalanceOptions {
                 userName: data.contract,
                 password: data.password
             }).then(token => {
+                this.core.mdl.setContractData(data.contract, 'token', token);
                 this.updateSettings(data);
                 resolve(data);
             }).catch(error => {
@@ -83,6 +89,10 @@ class NtkBalanceOptions {
         });
     }
 
+    /**
+     * Remove contract
+     * @param contract
+     */
     removeContract(contract) {
         if(this.settings.contracts) {
             delete this.settings.contracts[contract];
@@ -91,6 +101,10 @@ class NtkBalanceOptions {
         }
     }
 
+    /**
+     * Write settings in DB
+     * @param data
+     */
     updateSettings(data) {
         if(this.settings.contracts) {
             delete this.settings.contracts[data.contract];
@@ -102,8 +116,13 @@ class NtkBalanceOptions {
             def: data.def
         };
         this.core.opts.write(this.settings);
+        this.core.updateAll();
     }
 
+    /**
+     * Display table
+     * @returns {NtkBalanceOptions}
+     */
     showContractsTable() {
         this.controls.msgContracts.hide();
         this.controls.contractsList.show('table');

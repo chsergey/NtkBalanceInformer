@@ -8,9 +8,12 @@
 
     'use strict';
 
-    var popup = {
+	/**
+	 * @todo rewrite in ES6
+     */
+	var popup = {
 
-		core: chrome.extension.getBackgroundPage()['w'],
+		core: chrome.extension.getBackgroundPage()['ntkBalance'],
 		templates: {
 			contract: {
 				node: '#contractTemplate',
@@ -47,34 +50,32 @@
 
 			addCustomMethods2HTMLElement();
 			initBaseTemplatesObjects();
-			initControls(this.commonControls);
+			initControls(this.commonControls, false, true);
 
-			this.renderAll();
-
-			initControls(this.dynamicControls, '#contracts');
+			this.renderAll()
+				.then(() => {				
+					initControls(this.dynamicControls, '#contracts', false);
+				});
 
             return this;
         },
 
 		renderAll: function () {
-			this.core.mdl
+			
+			return this.core.mdl
 				.getContracts()
 				.then((contracts) => {
 					contracts.map((contract) => {
 						popup.renderContract(contract);
 					});
 				});
-
-			//this.renderContract(239864);
-
-			return this;
 		},
 
-		renderContract: function (contract) {
+		renderContract: function (contract, once) {
 			var $contract_template = popup.templates.contract.node.cloneNode(true);
 
-			$contract_template.setAttribute('id', 'contract_' + contract + Math.random()*10000);
-			$contract_template.setAttribute('contract', contract + Math.random()*10000);
+			$contract_template.setAttribute('id', 'contract_' + contract);
+			$contract_template.setAttribute('contract', contract);
 
 			popup.templates.contract.variables.map((variableName) => {
 				$contract_template.t(
@@ -82,14 +83,29 @@
 					popup.reformer.getVariableValue(contract, variableName)
 				);
 			});
+			if(!once) {
+				popup.commonControls.wrappers.contracts.appendChild($contract_template);
+				return this;
+			}
 
-			popup.commonControls.wrappers.contracts.appendChild($contract_template);
-
-			return this;
+			return $contract_template;
 		},
 
-		onRefreshContract: function (event) {
-			console.log('refreshing', this.parentNode.getAttribute('contract'));
+		onRefreshContract: function () {
+			let wrapper = this.parentNode,
+				loader = wrapper.getElementsByClassName('loader')[0],
+				contract = wrapper.getAttribute('contract');
+
+			loader.style.display = 'block';
+			popup.core.updateContract(contract)
+				.then(() => {
+					setTimeout(() => {
+						let new_wrapper = popup.renderContract(contract, true);
+						wrapper.html(new_wrapper.html());
+						initControls(popup.dynamicControls, '#' + wrapper.getAttribute('id'), false);
+						loader.style.display = 'none';
+					}, 1000);
+				});
 		},
 
 		openSettings: function () {
@@ -112,29 +128,32 @@
 	}
 
 	// TODO variable events
-	function initControls(controls, context) {
+	function initControls(controls, context, save) {
 		Object.keys(controls).map((type) => {
 			Object.keys(controls[type]).map((control) => {
-				var selector = controls[type][control]._selector,
-					event = controls[type][control]._event;
+				let selector = controls[type][control]._selector,
+					event = controls[type][control]._event,
+					elements = $$(selector, context);
 
-				controls[type][control] = $$(selector, context);
+				if(save) {
+					controls[type][control] = elements;
+				}
 
-				if(controls[type][control].length
+				if(elements.length
 					&& event
 					&& popup.hasOwnProperty(event)
 					&& popup[event] instanceof Function)
 				{
-					[].map.call(controls[type][control], (object) => {
+					[].map.call(elements, (object) => {
 						object.addEventListener('click', popup[event]);
 					});
 				}
 
-				if(controls[type][control].length === 1) {
-					controls[type][control] = controls[type][control][0];
+				if(save && elements.length === 1) {
+					controls[type][control] = elements[0];
 				}
 
-				if(controls[type][control].length === 0) {
+				if(save && elements.length === 0) {
 					controls[type][control] = null;
 				}
 			});

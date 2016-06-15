@@ -37,6 +37,7 @@ div#contractTemplate {
     align-content: center;
 }
 .contract-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex: auto;
@@ -117,3 +118,13 @@ div#contractTemplate {
     /*display: none;*/
 }
 
+div.loader {
+    position: absolute;
+    background: white url(../img/spin.gif) no-repeat center center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    display: none;
+}
