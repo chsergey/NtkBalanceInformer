@@ -36,7 +36,6 @@
   "permissions": [
     "alarms",
     "storage",
-    "https://api.novotelecom.ru/*",
-    "http://london-app:8490/*"
+    "https://api.novotelecom.ru/*"
   ]
 }
